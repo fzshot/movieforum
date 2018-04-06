@@ -52,7 +52,8 @@ exports.config = {
       copycat: {
           "fonts": ["node_modules/element-theme-default/lib/fonts"],
           verbose: true,
-      }
+      },
+      sass: {},
   },
 
   modules: {
