@@ -11,8 +11,14 @@ config :movieforum, MovieforumWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -51,8 +57,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :movieforum, Movieforum.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "movieforum",
+  password: "Ahxe2boo8Hoo",
   database: "movieforum_dev",
   hostname: "localhost",
   pool_size: 10
