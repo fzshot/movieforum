@@ -1,17 +1,17 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from 'element-react';
+import {Link} from "react-router-dom";
+import { Button, Menu} from 'element-react';
 
-import 'element-theme-default';
 
-function Nav(props) {
 
-	function onSelect() {
+export default function Nav(props) {
 
-	}
+
 	return (
 		<div>
-			<Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal" onSelect={this.onSelect.bind(this)}>
+			<Menu theme="dark" defaultActive="1" className="el-menu-demo" mode="horizontal" width="100%" >
 				<Menu.Item index="1">
 					<Link to="/">Home</Link>
 				</Menu.Item>
@@ -19,14 +19,14 @@ function Nav(props) {
 					<Link to="/">Movie Search</Link>
 				</Menu.Item>
 				<Menu.Item index="3">
-					<Link to="/">Movie Hello</Link>
+					<Link to="/">Movie Forum</Link>
 				</Menu.Item>
 			</Menu>
 
 
 		</div>
 
-	)
+	);
 
 
 }

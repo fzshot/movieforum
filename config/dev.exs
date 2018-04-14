@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :movieforum, Movieforum.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "movieforum_dev",
+  password: "123456",
   database: "movieforum_dev",
   hostname: "localhost",
   pool_size: 10
