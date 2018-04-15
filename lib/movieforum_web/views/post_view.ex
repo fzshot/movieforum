@@ -11,6 +11,15 @@ defmodule MovieforumWeb.PostView do
   end
 
   def render("post.json", %{post: post}) do
-    %{id: post.id, title: post.title, tmdb: post.tmdb, content: post.content, user: post.user}
+    %{
+      id: post.id,
+      title: post.title,
+      post_time: post.inserted_at,
+      update_time: post.updated_at,
+      tmdb: render_one(post.tmdb, TMDBView, "tmdb.json"),
+      content: post.content,
+      user: render_one(post.user, UserView, "user.json"),
+      replys: render_many(post.replys, ReplyView, "reply.json")
+    }
   end
 end

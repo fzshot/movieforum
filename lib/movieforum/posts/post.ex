@@ -7,6 +7,8 @@ defmodule Movieforum.Posts.Post do
     field(:title, :string)
     belongs_to(:tmdb, Movieforum.TMDBs.TMDB)
     belongs_to(:user, Movieforum.Users.User)
+
+    has_many(:replys, Movieforum.Replys.Reply)
     timestamps()
   end
 

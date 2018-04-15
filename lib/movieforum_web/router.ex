@@ -27,6 +27,7 @@ defmodule MovieforumWeb.Router do
     resources("/users", UserController, except: [:new, :edit])
     resources("/posts", PostController, except: [:new, :edit])
     resources("/tmdbs", TMDBController, except: [:new, :edit])
+    resources("/replys", ReplyController, except: [:new, :edit])
     get("/search/:movie_name", APIController, :search_movies)
   end
 end

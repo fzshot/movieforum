@@ -18,7 +18,7 @@ defmodule Movieforum.Posts do
 
   """
   def list_posts do
-    Repo.all(Post) |> Repo.preload(:user) |> Repo.preload(:tmdb)
+    Repo.all(Post) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
   end
 
   @doc """
