@@ -25,5 +25,6 @@ defmodule MovieforumWeb.Router do
   scope "/api/v1", MovieforumWeb do
     pipe_through(:api)
     resources("/users", UserController, except: [:new, :edit])
+    get("/search/:movie_name", APIController, :search_movies)
   end
 end
