@@ -18,12 +18,8 @@ class One extends React.Component {
     return (
       <Router>
         <div>
-
           <Nav/>
           <MyCarousel />
-
-
-
         </div>
       </Router>
     );

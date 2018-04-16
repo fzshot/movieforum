@@ -5,6 +5,7 @@ defmodule Movieforum.Users.User do
 
   schema "users" do
     field :name, :string
+    field :email, :string
     field :password_hash, :string
 
     timestamps()
@@ -13,7 +14,8 @@ defmodule Movieforum.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :password_hash])
-    |> validate_required([:name, :password_hash])
+    |> cast(attrs, [:name, :email, :password_hash])
+    |> validate_required([:name, :email, :password_hash])
+    |> unique_constraint(:email)
   end
 end
