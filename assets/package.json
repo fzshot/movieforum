@@ -6,16 +6,20 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0",
     "deep-freeze": "0.0.1",
-    "element-react": "^1.4.12",
+    "element-react": "^1.4.13",
     "element-theme-default": "^1.4.13",
     "jquery": "^3.3.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "react": "^16.3.1",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.1",
+    "react-overlays": "^0.8.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "reactstrap": "^5.0.0-beta.3",
     "redux": "^3.7.2",
     "underscore": "^1.8.3"
   },
