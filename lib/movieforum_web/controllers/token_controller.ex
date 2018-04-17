@@ -4,6 +4,8 @@ defmodule MovieforumWeb.TokenController do
   alias Movieforum.Users
   alias Movieforum.Users.User
 
+  action_fallback MovieforumWeb.FallbackController
+
   def create(conn, %{"email" => email, "pass" => pass}) do
     with {:ok, %User{} = user} <- Users.get_and_auth_user(email, pass) do
       token = Phoenix.Token.sign(conn, "auth token", user.id)

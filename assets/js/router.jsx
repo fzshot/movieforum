@@ -1,27 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import CommentBlock from "./commentblock";
-import Movie_card from "./movie_card";
-import Nav from "./nav";
-import MyCarousel from "./carousel";
-
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
-export default function tasktracker_init(root) {
-  ReactDOM.render(
-    <One/>, root);
-}
+import Index from "./index";
+import Login from "./login";
+import Nav from "./nav";
 
-class One extends React.Component {
-
-  render() {
+export default function PageRouter(root) {
     return (
-      <Router>
-        <div>
-          <Nav/>
-          <MyCarousel />
-        </div>
-      </Router>
+        <Router>
+            <div>
+                <Nav style={{margin: "20px"}}/>
+                <Route path="/" exact={true} render={() =>
+                    <Index/>
+                }/>
+                <Route path="/login" exact={true} render={() =>
+                    <Login/>
+                }/>
+            </div>
+        </Router>
     );
-  };
 }
