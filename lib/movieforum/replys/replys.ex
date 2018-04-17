@@ -7,6 +7,7 @@ defmodule Movieforum.Replys do
   alias Movieforum.Repo
 
   alias Movieforum.Replys.Reply
+  alias Movieforum.Posts
 
   @doc """
   Returns the list of replys.
@@ -18,7 +19,10 @@ defmodule Movieforum.Replys do
 
   """
   def list_replys do
-    Repo.all(Reply) |> Repo.preload(:user) |> Repo.preload(:post)
+    Repo.all(Reply)
+    |> Repo.preload(:user)
+
+    # |> Repo.preload(:post)
   end
 
   @doc """
@@ -50,9 +54,17 @@ defmodule Movieforum.Replys do
 
   """
   def create_reply(attrs \\ %{}) do
-    %Reply{}
-    |> Reply.changeset(attrs)
-    |> Repo.insert()
+    x =
+      %Reply{}
+      |> Reply.changeset(attrs)
+      |> Repo.insert()
+
+    {:ok, pp} = x
+    # change the post
+    post = Posts.get_post!(pp.post_id)
+    p = Ecto.Changeset.change(post, floor: post.floor + 1)
+    Repo.update(p)
+    x
   end
 
   @doc """

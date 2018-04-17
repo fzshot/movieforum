@@ -8,6 +8,19 @@ defmodule MovieforumWeb.PostController do
 
   action_fallback(MovieforumWeb.FallbackController)
 
+  def post_numbers(conn, _params) do
+    posts = Posts.list_posts()
+    render(conn, "post_number.json", number: length(posts))
+  end
+
+  def get_recent_replyed_post_by_page(conn, %{"page_number" => page_number}) do
+    # every page 20 posts, start from page 1
+    posts = Posts.list_posts_by_updated_time()
+    page_number = String.to_integer(page_number)
+    posts = Enum.slice(posts, 20 * (page_number - 1), 20)
+    render(conn, "index.json", posts: posts)
+  end
+
   def index(conn, _params) do
     posts = Posts.list_posts()
     render(conn, "index.json", posts: posts)

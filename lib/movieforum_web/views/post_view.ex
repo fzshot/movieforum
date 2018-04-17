@@ -6,6 +6,10 @@ defmodule MovieforumWeb.PostView do
     %{data: render_many(posts, PostView, "post.json")}
   end
 
+  def render("post_number.json", %{number: number}) do
+    %{number: number}
+  end
+
   def render("show.json", %{post: post}) do
     %{data: render_one(post, PostView, "post.json")}
   end

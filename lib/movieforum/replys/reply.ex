@@ -4,8 +4,9 @@ defmodule Movieforum.Replys.Reply do
 
   schema "replys" do
     field(:content, :string)
+    field(:post_id, :integer)
     belongs_to(:user, Movieforum.Users.User)
-    belongs_to(:post, Movieforum.Posts.Post)
+    # belongs_to(:post, Movieforum.Posts.Post)
 
     timestamps()
   end
