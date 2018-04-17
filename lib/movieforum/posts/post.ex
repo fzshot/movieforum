@@ -5,6 +5,7 @@ defmodule Movieforum.Posts.Post do
   schema "posts" do
     field(:content, :string)
     field(:title, :string)
+    field(:floor, :integer)
     belongs_to(:tmdb, Movieforum.TMDBs.TMDB)
     belongs_to(:user, Movieforum.Users.User)
 
