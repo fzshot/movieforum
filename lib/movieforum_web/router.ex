@@ -28,6 +28,13 @@ defmodule MovieforumWeb.Router do
     resources("/posts", PostController, except: [:new, :edit])
     resources("/tmdbs", TMDBController, except: [:new, :edit])
     resources("/replys", ReplyController, except: [:new, :edit])
+
+    get(
+      "/recent_replyed_post/page/:page_number",
+      PostController,
+      :get_recent_replyed_post_by_page
+    )
+
     get("/search/:movie_name", APIController, :search_movies)
     get("/discover/recent_movies", APIController, :recent_movies)
   end

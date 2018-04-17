@@ -21,6 +21,11 @@ defmodule Movieforum.Posts do
     Repo.all(Post) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
   end
 
+  def list_posts_by_updated_time do
+    query = from(p in Post, order_by: [desc: :updated_at])
+    Repo.all(query) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
+  end
+
   @doc """
   Gets a single post.
 
