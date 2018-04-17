@@ -28,7 +28,55 @@ defmodule Seeds do
     p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
 
     p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
 
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
+    p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
+
+    p2 = Repo.insert!(%Post{title: "title02", user_id: 1, tmdb_id: 1, content: "content test 2"})
     # cant test reply by direct insert
     # r1 = Repo.insert!(%Reply{user_id: 1, post_id: 2, content: "Some reply"})
     Replys.create_reply(%{user_id: 1, post_id: 2, content: "Some reply"})

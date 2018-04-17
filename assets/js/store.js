@@ -67,9 +67,9 @@ let default_page_num = {
 function pagenum(state = default_page_num, action) {
     switch(action.type) {
         case "SET_TOTAL_PAGE":
-            return Object.assign({}, state, action.num);
+            return Object.assign({}, state, action.data);
         case "SET_CURRENT_PAGE":
-            return Object.assign({}, state, action.num);
+            return Object.assign({}, state, action.data);
         default:
             return state;
     }
