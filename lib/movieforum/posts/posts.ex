@@ -7,6 +7,7 @@ defmodule Movieforum.Posts do
   alias Movieforum.Repo
 
   alias Movieforum.Posts.Post
+  alias Movieforum.Replys.Reply
 
   @doc """
   Returns the list of posts.
@@ -22,7 +23,15 @@ defmodule Movieforum.Posts do
   end
 
   def list_posts_by_updated_time do
-    query = from(p in Post, order_by: [desc: :updated_at])
+    query =
+      from(
+        p in Post,
+        order_by: [desc: :updated_at],
+        # join: r in Reply,
+        # on: r.post_id == p.id,
+        preload: [replys: :user]
+      )
+
     Repo.all(query) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
   end
 

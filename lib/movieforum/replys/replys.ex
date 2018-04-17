@@ -19,7 +19,10 @@ defmodule Movieforum.Replys do
 
   """
   def list_replys do
-    Repo.all(Reply) |> Repo.preload(:user) |> Repo.preload(:post)
+    Repo.all(Reply)
+    |> Repo.preload(:user)
+
+    # |> Repo.preload(:post)
   end
 
   @doc """
