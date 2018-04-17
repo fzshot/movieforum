@@ -35,6 +35,8 @@ defmodule MovieforumWeb.Router do
       :get_recent_replyed_post_by_page
     )
 
+    get("/stats/posts_number", PostController, :post_numbers)
+
     get("/search/:movie_name", APIController, :search_movies)
     get("/discover/recent_movies", APIController, :recent_movies)
   end
