@@ -5,12 +5,15 @@ import {Table} from "element-react";
 function ListPosts(props){
     let columns = [
         {
-            label: "Post by:",
-            prop: "user_name",
-        },
-        {
             label: "Title:",
             prop: "title",
+            align: "center",
+        },
+        {
+            label: "Post by:",
+            prop: "user_name",
+            width: 250,
+            align: "center",
         },
     ];
     let data = _.map(props.posts, (post) => {
@@ -27,7 +30,6 @@ function ListPosts(props){
 
 
 function state2props(state) {
-    console.log(state.pagenum);
     return {
         posts: state.posts,
     };

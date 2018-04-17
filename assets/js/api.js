@@ -95,7 +95,6 @@ class API {
                 let temp = {
                     total_page: resp.number,
                 };
-                console.log(temp);
                 store.dispatch({
                     type: "SET_TOTAL_PAGE",
                     data: temp,
