@@ -15,7 +15,9 @@ defmodule MovieforumWeb.ReplyView do
       id: reply.id,
       content: reply.content,
       reply_time: reply.inserted_at,
-      update_time: reply.updated_at
+      update_time: reply.updated_at,
+      user: render_one(reply.user, UserView, "user.json"),
+      post_id: reply.post_id
     }
   end
 end
