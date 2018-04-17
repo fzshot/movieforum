@@ -13,6 +13,7 @@
     <script>
         window.user_path = "<%= user_path(@conn, :index) %>";
         window.token_path = "<%= token_path(@conn, :create) %>";
+        window.post_path = "<%= post_path(@conn, :index) %>";
     </script>
   </head>
 
