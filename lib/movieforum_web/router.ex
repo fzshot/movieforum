@@ -13,17 +13,11 @@ defmodule MovieforumWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  scope "/", MovieforumWeb do
-    # Use the default browser stack
-    pipe_through(:browser)
-
-    get("/", PageController, :index)
-    post("/session", SessionController, :create)
-    delete("/session", SessionController, :delete)
-  end
-
   scope "/api/v1", MovieforumWeb do
     pipe_through(:api)
+
+    post("/token", TokenController, :create)
+
     resources("/users", UserController, except: [:new, :edit])
     resources("/posts", PostController, except: [:new, :edit])
     resources("/tmdbs", TMDBController, except: [:new, :edit])
@@ -40,4 +34,12 @@ defmodule MovieforumWeb.Router do
     get("/search/:movie_name", APIController, :search_movies)
     get("/discover/recent_movies", APIController, :recent_movies)
   end
+
+  scope "/", MovieforumWeb do
+    # Use the default browser stack
+    pipe_through(:browser)
+
+    get("/*path", PageController, :index)
+  end
+
 end

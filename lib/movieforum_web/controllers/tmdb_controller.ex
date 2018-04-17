@@ -6,7 +6,7 @@ defmodule MovieforumWeb.TMDBController do
 
   action_fallback MovieforumWeb.FallbackController
 
-  def index(conn, _params) do
+  def index(conn, params) do
     tmdbs = TMDBs.list_tmdbs()
     render(conn, "index.json", tmdbs: tmdbs)
   end

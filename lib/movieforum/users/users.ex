@@ -55,9 +55,10 @@ defmodule Movieforum.Users do
     |> Repo.insert()
   end
 
-  def get_and_auth_user(name, pass) do
-    user = Repo.one(from(u in User, where: u.name == ^name))
+  def get_and_auth_user(email, pass) do
+    user = Repo.one(from(u in User, where: u.email == ^email))
     Comeonin.Argon2.check_pass(user, pass)
+    |> IO.inspect
   end
 
   @doc """

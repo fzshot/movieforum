@@ -22,14 +22,25 @@ import "phoenix_html"
 //import Nav from "./Nav";
 
 
-import tasktracker_init from "./todo";
-// import tasktracker_init from "./test";
+import page_init from "./page_init";
+import store from "./store";
 
 function initial() {
-
-  let root = document.getElementById("root");
-  console.log("root",root)
-  tasktracker_init(root)
+    let root = document.getElementById("root");
+    if (root) {
+        if (window.localStorage.getItem("token")) {
+            let token = {
+                token: window.localStorage.getItem("token"),
+                user_name: window.localStorage.getItem("name"),
+                user_id: window.localStorage.getItem("id"),
+            };
+            store.dispatch({
+                type: "SET_TOKEN",
+                token: token,
+            });
+        }
+        page_init(store, root);
+    }
 }
 
-$(initial());
+$(initial);
