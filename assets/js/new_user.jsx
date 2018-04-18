@@ -3,12 +3,17 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {Layout, Button, Form, Input, Alert, Message} from "element-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import api from "./api";
 import store from "./store";
 
-export default function NewUser(props){
-    return <NewUserForm/>;
+function NewUser(props){
+    if (props.redirect) {
+        return <Redirect to="/"/>;
+    } else {
+        return <NewUserForm/>;
+    }
 }
 
 
@@ -22,6 +27,7 @@ class NewUserForm extends React.Component {
                 email: "",
                 password: "",
                 cpassword: "",
+                captcha: "",
             },
             rule: {
                 name: [
@@ -54,11 +60,15 @@ class NewUserForm extends React.Component {
                         }
                     }}
                 ],
+                captcha: [
+                    {required: true, message: "Please complete the CAPTCHA check"},
+                ],
             }
         };
     }
 
     onChange(key, value) {
+        console.log(key, value);
         this.setState({
             model: Object.assign({}, this.state.model, {[key]: value})
         });
@@ -67,7 +77,57 @@ class NewUserForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        this.refs.form.validate((valid) => {});
+        this.refs.form.validate((valid) => {
+            let path = "/api/v1/users";
+
+            let text = {
+                user: {
+                    name: this.state.model.name,
+                    email: this.state.model.email,
+                    password: this.state.model.password,
+                    captcha: this.state.model.captcha,
+                }
+            };
+
+            $.ajax(path, {
+                method: "post",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify(text),
+                success: () => {
+                    Message({
+                        message: "Greeting, new friend!",
+                        type: "success",
+                    });
+                    store.dispatch({
+                        type: "REDIRECT",
+                    });
+                    store.dispatch({
+                        type: "NOREDIRECT",
+                    });
+                },
+                error: (resp) => {
+                    let error = JSON.parse(resp.responseText);
+                    if (error.errors.email) {
+                        let errortext = "email "+error.errors.email[0];
+                        Message({
+                            showClose: true,
+                            duration: 0,
+                            message: errortext,
+                            type: "error",
+                        });
+                    } else {
+                        Message({
+                            showClose: true,
+                            duration: 0,
+                            message: "Some unknown error, please try again later.",
+                            type: "error",
+                        });
+                    }
+                }
+            });
+
+        });
     }
 
     render() {
@@ -88,16 +148,28 @@ class NewUserForm extends React.Component {
                         <Form.Item label="Comfirm Password" prop="cpassword">
                             <Input type="password" onChange={this.onChange.bind(this, "cpassword")}/>
                         </Form.Item>
-                        <Layout.Row type="flex" justify="space-between" align="middle">
-                            <Layout.Col span="6">
+                        <Form.Item prop="captcha">
+                                <ReCAPTCHA
+                                    sitekey="6LdcA1AUAAAAAGafdWuRgSg65zQMmaABOApAL9dS"
+                                    onChange={this.onChange.bind(this, "captcha")}
+                                />
+                        </Form.Item>
+                        <Form.Item>
                                 <Button nativeType="submit" type="primary">
                                     Submit
                                 </Button>
-                            </Layout.Col>
-                        </Layout.Row>
+                        </Form.Item>
                     </Form>
                 </Layout.Col>
             </Layout.Row>
         );
     }
 }
+
+function state2props(state) {
+    return {
+        redirect: state.redirect,
+    }
+}
+
+export default connect(state2props)(NewUser)
