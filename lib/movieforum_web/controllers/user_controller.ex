@@ -11,16 +11,33 @@ defmodule MovieforumWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
+  def check_captcha(captch) do
+    google_url = "https://www.google.com/recaptcha/api/siteverify"
+    secret = "6LdcA1AUAAAAAMEYCFbrgURKIkPOArgeXvmmteNB"
+    body = Poison.encode!(%{secret: secret, reponse: captch})
+    resp = HTTPoison.post!(google_url, body)
+    Poison.decode!(resp.body)["success"]
+  end
+
   def create(conn, %{"user" => user_params}) do
+    captcha = user_params["captcha"]
     pw = user_params["password"]
 
     cond do
+      !check_captcha(captcha) ->
+        {:error, "recaptcha not pass."}
+
       String.length(pw) < 8 ->
-        {:error}
+        {:error, "password shorter than 8 characters."}
 
       true ->
         pw_hash = Comeonin.Argon2.hashpwsalt(pw)
-        user_params = %{name: user_params["name"], email: user_params["email"], password_hash: pw_hash}
+
+        user_params = %{
+          name: user_params["name"],
+          email: user_params["email"],
+          password_hash: pw_hash
+        }
 
         with {:ok, %User{} = user} <- Users.create_user(user_params) do
           conn

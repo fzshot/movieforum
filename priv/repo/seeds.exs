@@ -23,6 +23,7 @@ defmodule Seeds do
 
     a = Repo.insert!(%User{email: "alice@example.com", name: "alice", password_hash: p})
 
+    # this will raise error for it is not a json.
     tmdb = Repo.insert!(%TMDB{tmdb_id: "100", detail_json: "test tmdb"})
 
     p1 = Repo.insert!(%Post{title: "title01", user_id: 1, tmdb_id: 1, content: "content test"})
@@ -82,6 +83,5 @@ defmodule Seeds do
     Replys.create_reply(%{user_id: 1, post_id: 2, content: "Some reply"})
   end
 end
-
 
 Seeds.run()
