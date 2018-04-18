@@ -17,4 +17,10 @@ defmodule MovieforumWeb.FallbackController do
     |> put_status(:not_found)
     |> render(MovieforumWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, "captcha error"}) do
+    conn
+    |> put_status(401)
+    |> render(%{myerror: "Are you sure you are human? or Robot?"})
+  end
 end

@@ -116,6 +116,13 @@ class NewUserForm extends React.Component {
                             message: errortext,
                             type: "error",
                         });
+                    } else if (error.myerror) {
+                        Message({
+                            showClose: true,
+                            duration: 0,
+                            message: error.myerror,
+                            type: "error",
+                        });
                     } else {
                         Message({
                             showClose: true,

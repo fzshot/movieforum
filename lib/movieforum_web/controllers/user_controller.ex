@@ -12,10 +12,9 @@ defmodule MovieforumWeb.UserController do
   end
 
   def check_captcha(captch) do
-    google_url = "https://www.google.com/recaptcha/api/siteverify"
+    google_url = "https://www.google.com/recaptcha/api/siteverify?"
     secret = "6LdcA1AUAAAAAMEYCFbrgURKIkPOArgeXvmmteNB"
-    body = Poison.encode!(%{secret: secret, response: captch})
-    resp = HTTPoison.post!(google_url, body)
+    resp = HTTPoison.get!(google_url<>"secret="<>secret<>"&response="<>captch)
     Poison.decode!(resp.body)["success"]
   end
 
@@ -25,7 +24,7 @@ defmodule MovieforumWeb.UserController do
 
     cond do
       !check_captcha(captcha) ->
-        {:error, "recaptcha not pass."}
+        {:error, "captcha error"}
 
       String.length(pw) < 8 ->
         {:error, "password shorter than 8 characters."}
