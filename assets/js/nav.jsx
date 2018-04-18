@@ -21,7 +21,7 @@ function Nav(props) {
         console.log(props.token);
         let user_name = props.token.user_name;
         return (
-            <Layout.Row type="flex" justify="center">
+            <Layout.Row className="extra-margin" type="flex" justify="center">
                 <Layout.Col span="16" xs="24">
                     <Menu theme="light" mode="horizontal"  onSelect={(e) => onSelect(e)}>
                         <Menu.Item index="1">
@@ -48,7 +48,7 @@ function Nav(props) {
         );
     } else {
         return (
-            <Layout.Row type="flex" justify="center">
+            <Layout.Row className="extra-margin" type="flex" justify="center">
                 <Layout.Col span="16" xs="24">
                     <Menu theme="light" mode="horizontal" onSelect={(e) => onSelect(e)}>
                         <Menu.Item index="1">

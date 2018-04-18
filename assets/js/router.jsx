@@ -14,7 +14,7 @@ function PageRouter(props) {
     return (
         <Router>
             <div>
-                <Nav style={{margin: "20px"}}/>
+                <Nav/>
                 <Route path="/" exact={true} render={() => {
                         let current = props.current_page;
                         api.get_total_page();
