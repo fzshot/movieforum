@@ -20,7 +20,7 @@ defmodule MovieforumWeb.UserController do
 
       true ->
         pw_hash = Comeonin.Argon2.hashpwsalt(pw)
-        user_params = %{name: user_params["name"], password_hash: pw_hash}
+        user_params = %{name: user_params["name"], email: user_params["email"], password_hash: pw_hash}
 
         with {:ok, %User{} = user} <- Users.create_user(user_params) do
           conn

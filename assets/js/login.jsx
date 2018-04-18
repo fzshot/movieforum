@@ -27,11 +27,11 @@ class LoginForm extends React.Component {
             },
             rule: {
               email: [
-                  {required: true, message: "Password is required", trigger: "blur"},
+                  {required: true, message: "Email is required", trigger: "blur"},
                   {type: "email", message: "Please enter a valid email address"}
               ],
               password: [
-                  {required: true, message: "This field is required", trigger: "blur"},
+                  {required: true, message: "Password field is required", trigger: "blur"},
                   {validator: (rule, value, callback) => {
                       if (value.length < 8) {
                           callback(new Error("The length of password is at least 8 characters"));
@@ -103,7 +103,7 @@ class LoginForm extends React.Component {
     render() {
       return(
         <Layout.Row type="flex" justify="center" align="middle">
-            <Layout.Col span="8" xs="24">
+            <Layout.Col span="8" xs="24" lg="6">
                 <h3>Login</h3>
                 <Warning login={this.state.login}/>
                 <Form ref="form" model={this.state.model} rules={this.state.rule}
@@ -112,7 +112,7 @@ class LoginForm extends React.Component {
                         <Input id="email" onChange={this.onChange.bind(this, "email")} />
                     </Form.Item>
                     <Form.Item label="Password" prop="password">
-                        <Input id="password" onChange={this.onChange.bind(this, "password")}/>
+                        <Input type="password" id="password" onChange={this.onChange.bind(this, "password")}/>
                     </Form.Item>
                     <Layout.Row type="flex" justify="space-between" align="middle">
                         <Layout.Col span="6">

@@ -10,7 +10,7 @@ import MyCarouselCard from "./carouselcard"
 
 export default function PosterCarousel(props) {
     return (
-        <Carousel interval="4000" type="card" height="1000px">
+        <Carousel interval="4000" type="card" height="500px">
             {
             [1,2,3,4,5,6,7,8].map((item, index) => {
                 return (

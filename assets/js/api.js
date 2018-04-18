@@ -87,28 +87,31 @@ class API {
     }
 
     get_total_page() {
-        let path = post_path+"/stats/posts_number";
+        let path = "/api/v1/stats/posts_number";
 
         $.ajax(path, {
             method: "get",
             success: (resp) => {
+                let temp = {
+                    total_page: resp.number,
+                };
                 store.dispatch({
                     type: "SET_TOTAL_PAGE",
-                    num: resp.number,
+                    data: temp,
                 });
             }
         });
     }
 
     get_posts_by_page(num) {
-        let path = post_path+"/recent_replyed_post/page/"+num;
+        let path = "/api/v1/recent_replyed_post/page/"+num;
 
         $.ajax(path, {
             method: "get",
             success: (resp) => {
                 store.dispatch({
                     type: "GET_POSTS",
-                    posts: resp.data,
+                    data: resp.data,
                 });
             }
         });

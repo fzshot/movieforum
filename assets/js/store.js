@@ -59,6 +59,8 @@ function login(state = false, action) {
     }
 }
 
+
+
 let default_page_num = {
     total_page: 1,
     current_page: 1,
@@ -67,9 +69,9 @@ let default_page_num = {
 function pagenum(state = default_page_num, action) {
     switch(action.type) {
         case "SET_TOTAL_PAGE":
-            return Object.assign({}, state, action.num);
+            return Object.assign({}, state, action.data);
         case "SET_CURRENT_PAGE":
-            return Object.assign({}, state, action.num);
+            return Object.assign({}, state, action.data);
         default:
             return state;
     }
@@ -84,9 +86,18 @@ function posts(state = [], action) {
     }
 }
 
+function route(state = 1, action) {
+    switch(action.type) {
+        case "SET_ROUTE":
+            return action.data;
+        default:
+            return state;
+    }
+}
+
 
 function root_reducer(state0, action) {
-    let reducer = combineReducers({token, users, redirect, login, newuser_dup, pagenum, posts});
+    let reducer = combineReducers({token, users, redirect, login, newuser_dup, pagenum, posts, route});
     let state1 = reducer(state0, action);
     return deepFreeze(state1);
 }

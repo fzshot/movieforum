@@ -1,37 +1,36 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Table, Pagination} from "element-react";
-
-import api from "./api";
+import {Table} from "element-react";
 
 function ListPosts(props){
-    let current_page = props.current_page;
-    api.get_total_page();
-    api.get_posts_by_page(current_page);
     let columns = [
-        {
-            label: "Post by:",
-            prop: "user",
-        },
         {
             label: "Title:",
             prop: "title",
+            align: "center",
+        },
+        {
+            label: "Post by:",
+            prop: "user_name",
+            width: 250,
+            align: "center",
         },
     ];
-    let data = props.posts;
-    return(
-        <Table
-            columns={colums}
-            data={data}
-        />
+    let data = _.map(props.posts, (post) => {
+        let name = post.user.name;
+        let temp = {user_name: name};
+        let newPost = Object.assign({}, post, temp);
+        return newPost;
+    });
+    return (
+        <Table columns={columns} data={data}/>
     );
 }
 
 
+
 function state2props(state) {
     return {
-        current_page: state.pagenum.current_page,
-        total_page: state.pagenum.total_page,
         posts: state.posts,
     };
 }
