@@ -21,6 +21,6 @@ defmodule MovieforumWeb.FallbackController do
   def call(conn, {:error, "captcha error"}) do
     conn
     |> put_status(401)
-    |> render(%{myerror: "Are you sure you are human? or Robot?"})
+    |> json %{myerror: "Are you sure you are Human? or Robot?"}
   end
 end
