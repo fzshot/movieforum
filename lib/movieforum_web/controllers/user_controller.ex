@@ -14,7 +14,7 @@ defmodule MovieforumWeb.UserController do
   def check_captcha(captch) do
     google_url = "https://www.google.com/recaptcha/api/siteverify"
     secret = "6LdcA1AUAAAAAMEYCFbrgURKIkPOArgeXvmmteNB"
-    body = Poison.encode!(%{secret: secret, reponse: captch})
+    body = Poison.encode!(%{secret: secret, response: captch})
     resp = HTTPoison.post!(google_url, body)
     Poison.decode!(resp.body)["success"]
   end
