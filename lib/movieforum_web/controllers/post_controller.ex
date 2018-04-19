@@ -3,6 +3,7 @@ defmodule MovieforumWeb.PostController do
 
   alias Movieforum.Posts
   alias Movieforum.TMDBs
+  alias Movieforum.TMDBs.TMDB
   alias Movieforum.Posts.Post
   alias Movieforum.APIs
 
@@ -28,19 +29,22 @@ defmodule MovieforumWeb.PostController do
 
   def create(conn, %{"post" => post_params}) do
     # check tmdb_id not exists then add into the server
-    tmdb = TMDBs.get_tmdb_by_tmdbid(post_params["tmdb_id"])
+    tmdb = TMDBs.get_tmdb_by_tmdbid(Integer.to_string(post_params["tmdb_id"]))
 
     right_tmdbid =
       if tmdb == [] do
         # json string
-        detail = APIs.movie_detail(tmdb)
-        {:ok, y} = TMDBs.create_tmdb(%{tmdb_id: post_params["tmdb_id"], detail_json: detail})
+        detail = APIs.movie_detail(post_params["tmdb_id"])
+        |> IO.inspect
+        {:ok, %TMDB{} = y} = TMDBs.create_tmdb(%{tmdb_id: Integer.to_string(post_params["tmdb_id"]), detail_json: detail})
+        |> IO.inspect
         y.id
       else
         List.first(tmdb)
       end
 
-    post_params = %{post_params | tmdb_id: right_tmdbid}
+    post_params = post_params
+    |> Map.put("tmdb_id", right_tmdbid)
 
     with {:ok, %Post{} = post} <- Posts.create_post(post_params) do
       conn

@@ -4,7 +4,7 @@ defmodule Movieforum.Repo.Migrations.CreatePosts do
   def change do
     create table(:posts) do
       add(:title, :string, null: false)
-      add(:tmdb_id, references(:users, on_delete: :nothing))
+      add(:tmdb_id, references(:tmdbs, on_delete: :nothing))
       add(:content, :text, null: false)
       add(:user_id, references(:users, on_delete: :nothing))
 
