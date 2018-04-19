@@ -65,7 +65,8 @@ exports.config = {
   npm: {
       enabled: true,
       styles: {
-          "element-theme-default": ["lib/"]
+          "element-theme-default": ["lib/"],
+          "github-markdown-css": ["/"],
       },
       globals: {
           $: "jquery",

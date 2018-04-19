@@ -29,19 +29,20 @@ function Nav(props) {
                                 Home
                             </Link>
                         </Menu.Item>
-                        <Menu.Item index="2">
+                        <span className="el-menu-item">
                             Movie Search
-                        </Menu.Item>
-                        <Menu.Item index="3">
+                        </span>
+                        <span className="el-menu-item">
                             Movie Forum
-                        </Menu.Item>
-                        <div className="login-align">
-                            <Menu.SubMenu index="4" title={user_name}>
-                                <Menu.Item index="4-1">
-                                        Logout
-                                </Menu.Item>
-                            </Menu.SubMenu>
-                        </div>
+                        </span>
+                        <Link to="/newpost" className="el-menu-item">
+                            Create Post
+                        </Link>
+                        <Menu.SubMenu index="4" title={user_name} className="login-align">
+                            <Menu.Item index="4-1">
+                                    Logout
+                            </Menu.Item>
+                        </Menu.SubMenu>
                     </Menu>
                 </Layout.Col>
             </Layout.Row>
@@ -50,23 +51,22 @@ function Nav(props) {
         return (
             <Layout.Row className="extra-margin" type="flex" justify="center">
                 <Layout.Col span="16" xs="24">
-                    <Menu theme="light" mode="horizontal" onSelect={(e) => onSelect(e)}>
-                        <Menu.Item index="1">
-                            <Link to="/">
-                                Home
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item index="2">
+                    <Menu theme="light" mode="horizontal">
+                        <Link to="/" className="el-menu-item">
+                            Home
+                        </Link>
+                        <span className="el-menu-item">
                             Movie Search
-                        </Menu.Item>
-                        <Menu.Item index="3">
+                        </span>
+                        <span className="el-menu-item">
                             Movie Forum
-                        </Menu.Item>
-                        <Menu.Item index="4">
-                            <Link to="/login">
-                                Login
-                            </Link>
-                        </Menu.Item>
+                        </span>
+                        <Link to="/newpost" className="el-menu-item">
+                            Create Post
+                        </Link>
+                        <Link to="/login" className="el-menu-item">
+                            Login
+                        </Link>
                     </Menu>
                 </Layout.Col>
             </Layout.Row>

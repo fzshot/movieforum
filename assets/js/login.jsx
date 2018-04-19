@@ -124,10 +124,10 @@ class LoginForm extends React.Component {
                 <Form ref="form" model={this.state.model} rules={this.state.rule}
                         onSubmit={this.onSubmit.bind(this)}>
                     <Form.Item label="Email address" prop="email">
-                        <Input id="email" onChange={this.onChange.bind(this, "email")} />
+                        <Input onChange={this.onChange.bind(this, "email")} />
                     </Form.Item>
                     <Form.Item label="Password" prop="password">
-                        <Input type="password" id="password" onChange={this.onChange.bind(this, "password")}/>
+                        <Input type="password" onChange={this.onChange.bind(this, "password")}/>
                     </Form.Item>
                     <Form.Item prop="captcha">
                             <ReCAPTCHA
@@ -142,7 +142,7 @@ class LoginForm extends React.Component {
                                     Submit
                                 </Button>
                             </Layout.Col>
-                            <Layout.Col span="8" xs="22" lg="6">
+                            <Layout.Col span="8" xs="22" lg="6" style={{textAlign: "right"}}>
                                 <Link to="/newuser">
                                     New User
                                 </Link>
