@@ -55,7 +55,7 @@ class ShowPostClass extends React.Component {
             success: (resp) => {
                 let data = resp.data;
                 let tmdb = JSON.parse(data.tmdb.detail_json);
-                let img = "http://image.tmdb.org/t/p/w400"+tmdb.backdrop_path;
+                let img = "https://image.tmdb.org/t/p/w400"+tmdb.backdrop_path;
                 let newState = {
                     name: data.user.name,
                     title: data.title,
