@@ -76,7 +76,6 @@ class LoginForm extends React.Component {
                     contentType: "application/json; charset=UTF-8",
                     data: JSON.stringify(text),
                     success: (resp) => {
-                        console.log(resp);
                         Message({
                             message: "Welcome Back!",
                             type: "success",
