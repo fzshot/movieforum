@@ -6,6 +6,7 @@ defmodule MovieforumWeb.PostController do
   alias Movieforum.TMDBs.TMDB
   alias Movieforum.Posts.Post
   alias Movieforum.APIs
+  alias Movieforum.Repo
 
   action_fallback(MovieforumWeb.FallbackController)
 
@@ -47,6 +48,9 @@ defmodule MovieforumWeb.PostController do
     |> Map.put("tmdb_id", right_tmdbid)
 
     with {:ok, %Post{} = post} <- Posts.create_post(post_params) do
+      post = post
+      |> Repo.preload(:user)
+      |> Repo.preload(:tmdb)
       conn
       |> put_status(:created)
       |> put_resp_header("location", post_path(conn, :show, post))

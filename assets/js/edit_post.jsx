@@ -5,8 +5,8 @@ import {Redirect} from "react-router-dom"
 import ReactMarkdown from "react-markdown";
 import {Layout, Button, Form, Input, Select, Message} from "element-react";
 
-function NewPost(props) {
-    return <NewPostClass user_id={props.user_id} token={props.token}/>;
+function EditPost(props) {
+    return <NewPostClass id={props.id} user_id={props.user_id} token={props.token}/>;
 }
 
 class NewPostClass extends React.Component {
@@ -14,6 +14,7 @@ class NewPostClass extends React.Component {
         super(props);
 
         this.state = {
+            id: props.id,
             loading: false,
             options: [],
             post_id: "",
@@ -23,7 +24,6 @@ class NewPostClass extends React.Component {
             model: {
                 title: "",
                 content: "",
-                movie: 0,
             },
             rule: {
                 title: [
@@ -32,40 +32,29 @@ class NewPostClass extends React.Component {
                 content: [
                     {required: true, message: "Content is required", trigger: "blur"}
                 ],
-                movie: [
-                    {required: true, type: "number", message: "Please select the movie you want to disscus", tigger: "blur"},
-                ],
             },
         };
+
+        this.getPost(this.state.id);
     }
 
-    onSearch(query) {
-        if (query !== "") {
-            this.setState({loading: true});
+    getPost(id) {
+        let path = "/api/v1/posts/"+id;
 
-            let path = "https://api.themoviedb.org/3/search/movie?api_key=864fe4c5e0531ee91e15a17f6704b16a&language=en-US&query="+query+"&page=1&include_adult=false&region=US";
-
-            $.ajax(path, {
-                method: "get",
-                success: (resp) => {
-                    let options = _.map(resp.results, (m) => {
-                        return {label: m.original_title, value: m.id};
-                    });
-                    this.setState({options: options});
-                },
-            });
-
-            setTimeout(() => {
-                this.setState({
-                    loading: false,
-                    options: _.filter(this.state.options, (item) => {
-                        return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
-                    }),
-                });
-            }, 500);
-        } else {
-            this.setState({options: []});
-        }
+        $.ajax(path, {
+            method: "get",
+            success: (resp) => {
+                console.log(resp);
+                let data = resp.data;
+                let tmdb = JSON.parse(data.tmdb.detail_json);
+                let newState = {
+                    title: data.title,
+                    content: data.content,
+                };
+                this.setState({model: newState});
+            },
+            error: () => {},
+        });
     }
 
     onChange(key, value) {
@@ -79,7 +68,7 @@ class NewPostClass extends React.Component {
 
         this.refs.form.validate((valid) => {
             if (valid) {
-                let path = "/api/v1/posts";
+                let path = "/api/v1/posts/"+this.state.id;
 
                 let text = {
                     post: {
@@ -91,7 +80,7 @@ class NewPostClass extends React.Component {
                 };
 
                 $.ajax(path, {
-                    method: "post",
+                    type: "patch",
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     data: JSON.stringify(text),
@@ -117,30 +106,11 @@ class NewPostClass extends React.Component {
                         <Layout.Col span="8" xs="22">
                             <Form ref="form" model={this.state.model} rules={this.state.rule}
                                 onSubmit={this.onSubmit.bind(this)}>
-                                <Form.Item label="Movie" prop="movie">
-                                    <Select filterable={true} remote={true}
-                                            multiple={false}
-                                            remoteMethod={this.onSearch.bind(this)}
-                                            loading={this.state.loading}
-                                            value={this.state.model.movie}
-                                            onChange={this.onChange.bind(this, "movie")}
-                                    >
-                                        {
-                                            _.map(this.state.options, (el) => {
-                                                return <Select.Option
-                                                    key={el.value}
-                                                    label={el.label}
-                                                    value={el.value}
-                                                       />;
-                                            })
-                                        }
-                                    </Select>
-                                </Form.Item>
                                 <Form.Item label="Title" prop="title">
-                                    <Input onChange={this.onChange.bind(this, "title")} />
+                                    <Input value={this.state.model.title} onChange={this.onChange.bind(this, "title")} />
                                 </Form.Item>
                                 <Form.Item label="Content (Support Markdown Styling)" prop="content">
-                                    <Input type="textarea" onChange={this.onChange.bind(this, "content")}/>
+                                    <Input type="textarea" value={this.state.model.content} onChange={this.onChange.bind(this, "content")}/>
                                 </Form.Item>
                                 <Form.Item>
                                     <Button nativeType="submit" type="primary">
@@ -180,4 +150,4 @@ function state2props(state) {
     }
 }
 
-export default connect(state2props)(NewPost)
+export default connect(state2props)(EditPost)
