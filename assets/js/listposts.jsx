@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 import {Table} from "element-react";
 
 function ListPosts(props){
@@ -8,6 +9,15 @@ function ListPosts(props){
             label: "Title:",
             prop: "title",
             align: "center",
+            render: (data) => {
+                console.log(data);
+                let path = "/post/"+data.id;
+                return(
+                    <Link to={path} target="_blank">
+                        {data.title}
+                    </Link>
+                );
+            }
         },
         {
             label: "Post by:",
@@ -16,6 +26,7 @@ function ListPosts(props){
             align: "center",
         },
     ];
+    console.log(props.posts[0]);
     let data = _.map(props.posts, (post) => {
         let name = post.user.name;
         let temp = {user_name: name};

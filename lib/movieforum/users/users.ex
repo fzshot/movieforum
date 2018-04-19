@@ -35,10 +35,7 @@ defmodule Movieforum.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id) do
-    Repo.get!(User, id)
-    |> Repo.preload(:user)
-  end
+  def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
   Creates a user.

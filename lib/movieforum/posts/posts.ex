@@ -50,7 +50,7 @@ defmodule Movieforum.Posts do
 
   """
   def get_post!(id),
-    do: Repo.get!(Post, id) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
+    do: Repo.get!(Post, id) |> Repo.preload(:user) |> Repo.preload(:tmdb)
 
   @doc """
   Creates a post.
