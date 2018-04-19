@@ -84,4 +84,4 @@ defmodule Seeds do
   end
 end
 
-Seeds.run()
+# Seeds.run()
