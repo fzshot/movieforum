@@ -13,7 +13,7 @@ export default function Index() {
     return (
         <div>
             <Layout.Row type="flex" justify="center">
-                <Layout.Col span="10" xs="24" sm="16" lg="12">
+                <Layout.Col span="10" xs="24" sm="16" lg="10">
                     <PosterCarousel/>
                 </Layout.Col>
             </Layout.Row>
