@@ -28,9 +28,9 @@ defmodule MovieforumWeb.PostController do
 
   def create(conn, %{"post" => post_params}) do
     # check tmdb_id not exists then add into the server
-    tmdb = TMDBs.get_tmdb(post_params["tmdb_id"])
+    tmdb = TMDBs.get_tmdb_by_tmdbid(post_params["tmdb_id"])
 
-    if !tmdb do
+    if tmdb == [] do
       # json string
       detail = APIs.movie_detail(tmdb)
       TMDBs.create_tmdb(%{tmdb_id: post_params["tmdb_id"], detail_json: detail})

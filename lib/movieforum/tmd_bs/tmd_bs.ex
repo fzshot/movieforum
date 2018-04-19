@@ -38,6 +38,12 @@ defmodule Movieforum.TMDBs do
   def get_tmdb!(id), do: Repo.get!(TMDB, id)
   def get_tmdb(id), do: Repo.get(TMDB, id)
 
+  # return [id] or []
+  def get_tmdb_by_tmdbid(tmdb_id) do
+    query = from(tmdb in "tmdbs", where: tmdb.tmdb_id == ^tmdb_id, select: tmdb.id)
+    Repo.all(query)
+  end
+
   @doc """
   Creates a tmdb.
 
