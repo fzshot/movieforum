@@ -50,7 +50,7 @@ exports.config = {
         presets: ["env", "react"],
     },
       copycat: {
-          "fonts": ["node_modules/element-theme-default/lib/fonts"],
+	        "css/fonts": ["node_modules/element-theme-default/lib/fonts"],
           verbose: true,
       },
       sass: {},
@@ -65,7 +65,8 @@ exports.config = {
   npm: {
       enabled: true,
       styles: {
-          "element-theme-default": ["lib/"]
+          "element-theme-default": ["lib/"],
+          "github-markdown-css": ["/"],
       },
       globals: {
           $: "jquery",

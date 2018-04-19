@@ -19,3 +19,34 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+//import Nav from "./Nav";
+
+
+import page_init from "./page_init";
+import store from "./store";
+
+import {i18n} from 'element-react';
+import locale from './i18n/en';
+
+
+function initial() {
+    i18n.use(locale);
+
+    let root = document.getElementById("root");
+    if (root) {
+        if (window.localStorage.getItem("token")) {
+            let token = {
+                token: window.localStorage.getItem("token"),
+                user_name: window.localStorage.getItem("name"),
+                user_id: window.localStorage.getItem("id"),
+            };
+            store.dispatch({
+                type: "SET_TOKEN",
+                token: token,
+            });
+        }
+        page_init(store, root);
+    }
+}
+
+$(initial);
