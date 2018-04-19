@@ -78,54 +78,64 @@ class NewUserForm extends React.Component {
         e.preventDefault();
 
         this.refs.form.validate((valid) => {
-            let path = "/api/v1/users";
+            if (valid) {
+                let path = "/api/v1/users";
 
-            let text = {
-                user: {
-                    name: this.state.model.name,
-                    email: this.state.model.email,
-                    password: this.state.model.password,
-                    captcha: this.state.model.captcha,
-                }
-            };
-
-            $.ajax(path, {
-                method: "post",
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                data: JSON.stringify(text),
-                success: () => {
-                    Message({
-                        message: "Greeting, new friend!",
-                        type: "success",
-                    });
-                    store.dispatch({
-                        type: "REDIRECT",
-                    });
-                    store.dispatch({
-                        type: "NOREDIRECT",
-                    });
-                },
-                error: (resp) => {
-                    let error = JSON.parse(resp.responseText);
-                    if (error.errors.email) {
-                        let errortext = "email "+error.errors.email[0];
-                        Message({
-                            showClose: true,
-                            duration: 0,
-                            message: errortext,
-                            type: "error",
-                        });
-                    } else {
-                        Message({
-                            showClose: true,
-                            duration: 0,
-                            message: "Some unknown error, please try again later.",
-                            type: "error",
-                        });
+                let text = {
+                    user: {
+                        name: this.state.model.name,
+                        email: this.state.model.email,
+                        password: this.state.model.password,
+                        captcha: this.state.model.captcha,
                     }
-                }
-            });
+                };
+
+                $.ajax(path, {
+                    method: "post",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify(text),
+                    success: () => {
+                        Message({
+                            message: "Greeting, new friend!",
+                            type: "success",
+                        });
+                        store.dispatch({
+                            type: "REDIRECT",
+                        });
+                        store.dispatch({
+                            type: "NOREDIRECT",
+                        });
+                    },
+                    error: (resp) => {
+                        let error = JSON.parse(resp.responseText);
+                        let myerror = resp.responseJSON;
+                        if (error.errors) {
+                            let errortext = "email "+error.errors.email[0];
+                            Message({
+                                showClose: true,
+                                duration: 0,
+                                message: errortext,
+                                type: "error",
+                            });
+                        } else if (myerror.myerror) {
+                            Message({
+                                showClose: true,
+                                duration: 0,
+                                message: error.myerror,
+                                type: "error",
+                            });
+                        } else {
+                            Message({
+                                showClose: true,
+                                duration: 0,
+                                message: "Some unknown error, please try again later.",
+                                type: "error",
+                            });
+                        }
+                    }
+                });
+            }
 
         });
     }

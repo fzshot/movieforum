@@ -18,10 +18,10 @@ defmodule MovieforumWeb.Router do
 
     post("/token", TokenController, :create)
 
-    resources("/users", UserController, except: [:new, :edit])
-    resources("/posts", PostController, except: [:new, :edit])
-    resources("/tmdbs", TMDBController, except: [:new, :edit])
-    resources("/replys", ReplyController, except: [:new, :edit])
+    resources("/users", UserController, except: [:new, :edit, :delete])
+    resources("/posts", PostController, except: [:new, :edit, :delete])
+    resources("/tmdbs", TMDBController, except: [:new, :edit, :delete])
+    resources("/replys", ReplyController, except: [:new, :edit, :delete])
 
     get(
       "/recent_replyed_post/page/:page_number",

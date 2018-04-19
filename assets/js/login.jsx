@@ -3,6 +3,7 @@ import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {Layout, Button, Form, Input, Alert, Message} from "element-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import api from "./api";
 import store from "./store";
@@ -24,6 +25,7 @@ class LoginForm extends React.Component {
             model: {
                 email: "",
                 password: "",
+                captcha: "",
             },
             rule: {
               email: [
@@ -40,6 +42,9 @@ class LoginForm extends React.Component {
                       }
                   }},
               ],
+                captcha: [
+                    {required: true, message: "Please complete the CAPTCHA check"},
+                ],
             },
         };
     }
@@ -57,12 +62,12 @@ class LoginForm extends React.Component {
             if (valid) {
                 this.setState({login: false});
 
-                let email = $("#email").val();
-                let pass = $("#password").val();
-
                 let text = {
-                    email: email,
-                    pass: pass,
+                    user: {
+                        email: this.state.model.email,
+                        pass: this.state.model.password,
+                        captcha: this.state.model.captcha,
+                    }
                 };
 
                 $.ajax(token_path, {
@@ -91,8 +96,18 @@ class LoginForm extends React.Component {
                         window.localStorage.setItem("name", resp.user_name);
                         window.localStorage.setItem("id", resp.user_id);
                     },
-                    error: () => {
-                        this.setState({login: true});
+                    error: (resp) => {
+                        let error = resp.responseJSON;
+                        if (error.myerror) {
+                            Message({
+                                showClose: true,
+                                duration: 0,
+                                message: error.myerror,
+                                type: "error",
+                            });
+                        } else {
+                            this.setState({login: true});
+                        }
                     }
                 });
             }
@@ -103,29 +118,37 @@ class LoginForm extends React.Component {
     render() {
       return(
         <Layout.Row type="flex" justify="center" align="middle">
-            <Layout.Col span="8" xs="24" lg="6">
+            <Layout.Col span="8" xs="22" lg="6">
                 <h3>Login</h3>
                 <Warning login={this.state.login}/>
                 <Form ref="form" model={this.state.model} rules={this.state.rule}
                         onSubmit={this.onSubmit.bind(this)}>
                     <Form.Item label="Email address" prop="email">
-                        <Input id="email" onChange={this.onChange.bind(this, "email")} />
+                        <Input onChange={this.onChange.bind(this, "email")} />
                     </Form.Item>
                     <Form.Item label="Password" prop="password">
-                        <Input type="password" id="password" onChange={this.onChange.bind(this, "password")}/>
+                        <Input type="password" onChange={this.onChange.bind(this, "password")}/>
                     </Form.Item>
-                    <Layout.Row type="flex" justify="space-between" align="middle">
-                        <Layout.Col span="6">
-                            <Button nativeType="submit" type="primary">
-                                Submit
-                            </Button>
-                        </Layout.Col>
-                        <Layout.Col span="6" style={{textAlign: "right"}}>
-                            <Link to="/newuser">
-                                New User
-                            </Link>
-                        </Layout.Col>
-                    </Layout.Row>
+                    <Form.Item prop="captcha">
+                            <ReCAPTCHA
+                                sitekey="6LdcA1AUAAAAAGafdWuRgSg65zQMmaABOApAL9dS"
+                                onChange={this.onChange.bind(this, "captcha")}
+                            />
+                    </Form.Item>
+                    <Form.Item>
+                        <Layout.Row type="flex" justify="space-between" align="middle">
+                            <Layout.Col span="8" xs="22" lg="6">
+                                <Button nativeType="submit" type="primary">
+                                    Submit
+                                </Button>
+                            </Layout.Col>
+                            <Layout.Col span="8" xs="22" lg="6" style={{textAlign: "right"}}>
+                                <Link to="/newuser">
+                                    New User
+                                </Link>
+                            </Layout.Col>
+                        </Layout.Row>
+                    </Form.Item>
                 </Form>
             </Layout.Col>
         </Layout.Row>

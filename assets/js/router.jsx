@@ -8,13 +8,13 @@ import Index from "./index";
 import Login from "./login";
 import Nav from "./nav";
 import NewUser from "./new_user";
+import NewPost from "./new_post";
 
 function PageRouter(props) {
-    console.log(props);
     return (
         <Router>
             <div>
-                <Nav style={{margin: "20px"}}/>
+                <Nav/>
                 <Route path="/" exact={true} render={() => {
                         let current = props.current_page;
                         api.get_total_page();
@@ -26,6 +26,9 @@ function PageRouter(props) {
                 }/>
                 <Route path="/newuser" exact={true} render={() =>
                     <NewUser/>
+                }/>
+                <Route path="/newpost" exact={true} render={() =>
+                    <NewPost/>
                 }/>
             </div>
         </Router>
