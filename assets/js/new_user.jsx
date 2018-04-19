@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {Layout, Button, Form, Input, Alert, Message} from "element-react";
@@ -9,11 +9,7 @@ import api from "./api";
 import store from "./store";
 
 function NewUser(props){
-    if (props.redirect) {
-        return <Redirect to="/"/>;
-    } else {
-        return <NewUserForm/>;
-    }
+    return <NewUserForm/>;
 }
 
 
@@ -22,6 +18,7 @@ class NewUserForm extends React.Component {
         super(props);
 
         this.state = {
+            redirect: false,
             model: {
                 name: "",
                 email: "",
@@ -68,7 +65,6 @@ class NewUserForm extends React.Component {
     }
 
     onChange(key, value) {
-        console.log(key, value);
         this.setState({
             model: Object.assign({}, this.state.model, {[key]: value})
         });
@@ -100,12 +96,7 @@ class NewUserForm extends React.Component {
                             message: "Greeting, new friend!",
                             type: "success",
                         });
-                        store.dispatch({
-                            type: "REDIRECT",
-                        });
-                        store.dispatch({
-                            type: "NOREDIRECT",
-                        });
+                        this.setState({redirect: true});
                     },
                     error: (resp) => {
                         let error = JSON.parse(resp.responseText);
@@ -141,38 +132,43 @@ class NewUserForm extends React.Component {
     }
 
     render() {
-        return(
-            <Layout.Row type="flex" align="middle" justify="center">
-                <Layout.Col span="8" xs="24" lg="6">
-                    <h3>Registration</h3>
-                    <Form ref="form" model={this.state.model} rules={this.state.rule} onSubmit={this.onSubmit.bind(this)}>
-                        <Form.Item label="Nick Name" prop="name">
-                            <Input  onChange={this.onChange.bind(this, "name")} />
-                        </Form.Item>
-                        <Form.Item label="Email address" prop="email">
-                            <Input  onChange={this.onChange.bind(this, "email")} />
-                        </Form.Item>
-                        <Form.Item label="Password" prop="password">
-                            <Input type="password" onChange={this.onChange.bind(this, "password")}/>
-                        </Form.Item>
-                        <Form.Item label="Comfirm Password" prop="cpassword">
-                            <Input type="password" onChange={this.onChange.bind(this, "cpassword")}/>
-                        </Form.Item>
-                        <Form.Item prop="captcha">
-                                <ReCAPTCHA
-                                    sitekey="6LdcA1AUAAAAAGafdWuRgSg65zQMmaABOApAL9dS"
-                                    onChange={this.onChange.bind(this, "captcha")}
-                                />
-                        </Form.Item>
-                        <Form.Item>
-                                <Button nativeType="submit" type="primary">
-                                    Submit
-                                </Button>
-                        </Form.Item>
-                    </Form>
-                </Layout.Col>
-            </Layout.Row>
-        );
+        if (this.state.redirect) {
+            return <Redirect to="/"/>;
+        }
+        else {
+            return (
+                <Layout.Row type="flex" align="middle" justify="center">
+                    <Layout.Col span="8" xs="24" lg="6">
+                        <h3>Registration</h3>
+                        <Form ref="form" model={this.state.model} rules={this.state.rule} onSubmit={this.onSubmit.bind(this)}>
+                            <Form.Item label="Nick Name" prop="name">
+                                <Input  onChange={this.onChange.bind(this, "name")} />
+                            </Form.Item>
+                            <Form.Item label="Email address" prop="email">
+                                <Input  onChange={this.onChange.bind(this, "email")} />
+                            </Form.Item>
+                            <Form.Item label="Password" prop="password">
+                                <Input type="password" onChange={this.onChange.bind(this, "password")}/>
+                            </Form.Item>
+                            <Form.Item label="Comfirm Password" prop="cpassword">
+                                <Input type="password" onChange={this.onChange.bind(this, "cpassword")}/>
+                            </Form.Item>
+                            <Form.Item prop="captcha">
+                                    <ReCAPTCHA
+                                        sitekey="6LdcA1AUAAAAAGafdWuRgSg65zQMmaABOApAL9dS"
+                                        onChange={this.onChange.bind(this, "captcha")}
+                                    />
+                            </Form.Item>
+                            <Form.Item>
+                                    <Button nativeType="submit" type="primary">
+                                        Submit
+                                    </Button>
+                            </Form.Item>
+                        </Form>
+                    </Layout.Col>
+                </Layout.Row>
+            );
+        }
     }
 }
 

@@ -48,7 +48,9 @@ defmodule Movieforum.APIs do
   def movie_detail(movie_id) do
     key = tmdb_api_key()
     url = "https://api.themoviedb.org/3/movie/#{movie_id}?api_key=#{key}"
+    |> IO.inspect
     resp = HTTPoison.get!(url)
+    |> IO.inspect
 
     if resp.status_code != 200 do
       {:error, "TMDB busy"}

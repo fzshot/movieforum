@@ -11,6 +11,6 @@ defmodule MovieforumWeb.TMDBView do
   end
 
   def render("tmdb.json", %{tmdb: tmdb}) do
-    %{id: tmdb.id, tmdb_id: tmdb.tmdb_id, detail_json: Poison.decode!(tmdb.detail_json)}
+    %{id: tmdb.id, tmdb_id: tmdb.tmdb_id, detail_json: tmdb.detail_json}
   end
 end

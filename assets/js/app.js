@@ -25,7 +25,13 @@ import "phoenix_html"
 import page_init from "./page_init";
 import store from "./store";
 
+import {i18n} from 'element-react';
+import locale from './i18n/en';
+
+
 function initial() {
+    i18n.use(locale);
+
     let root = document.getElementById("root");
     if (root) {
         if (window.localStorage.getItem("token")) {

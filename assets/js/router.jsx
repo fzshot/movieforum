@@ -9,6 +9,8 @@ import Login from "./login";
 import Nav from "./nav";
 import NewUser from "./new_user";
 import NewPost from "./new_post";
+import ShowPost from "./post";
+import EditPost from "./edit_post"
 
 function PageRouter(props) {
     return (
@@ -29,6 +31,12 @@ function PageRouter(props) {
                 }/>
                 <Route path="/newpost" exact={true} render={() =>
                     <NewPost/>
+                }/>
+                <Route path="/post/:id" exact={true} render={(id) =>
+                    <ShowPost id={id.match.params.id}/>
+                }/>
+                <Route path="/edit/:id" exact={true} render={(id) =>
+                    <EditPost id={id.match.params.id}/>
                 }/>
             </div>
         </Router>

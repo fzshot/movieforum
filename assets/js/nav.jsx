@@ -8,7 +8,6 @@ import store from "./store";
 
 function onSelect(e) {
     if (e == "4-1"){
-        console.log("ok");
         store.dispatch({
             type: "REMOVE_TOKEN",
         });
@@ -18,23 +17,14 @@ function onSelect(e) {
 
 function Nav(props) {
     if (props.token) {
-        console.log(props.token);
         let user_name = props.token.user_name;
         return (
             <Layout.Row className="extra-margin" type="flex" justify="center">
                 <Layout.Col span="16" xs="24">
                     <Menu theme="light" mode="horizontal"  onSelect={(e) => onSelect(e)}>
-                        <Menu.Item index="1">
-                            <Link to="/">
-                                Home
-                            </Link>
-                        </Menu.Item>
-                        <span className="el-menu-item">
-                            Movie Search
-                        </span>
-                        <span className="el-menu-item">
-                            Movie Forum
-                        </span>
+                        <Link to="/" className="el-menu-item">
+                            Home
+                        </Link>
                         <Link to="/newpost" className="el-menu-item">
                             Create Post
                         </Link>
@@ -55,12 +45,6 @@ function Nav(props) {
                         <Link to="/" className="el-menu-item">
                             Home
                         </Link>
-                        <span className="el-menu-item">
-                            Movie Search
-                        </span>
-                        <span className="el-menu-item">
-                            Movie Forum
-                        </span>
                         <Link to="/newpost" className="el-menu-item">
                             Create Post
                         </Link>

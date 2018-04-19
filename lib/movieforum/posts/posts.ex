@@ -49,8 +49,11 @@ defmodule Movieforum.Posts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id),
-    do: Repo.get!(Post, id) |> Repo.preload(:user) |> Repo.preload(:tmdb) |> Repo.preload(:replys)
+  def get_post!(id) do
+    Repo.get!(Post, id)
+    |> Repo.preload(:user)
+    |> Repo.preload(:tmdb)
+  end
 
   @doc """
   Creates a post.
