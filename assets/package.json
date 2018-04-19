@@ -8,6 +8,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "deep-freeze": "0.0.1",
+    "disqus-react": "^1.0.5",
     "element-react": "^1.4.13",
     "element-theme-default": "^1.4.13",
     "github-markdown-css": "^2.10.0",
