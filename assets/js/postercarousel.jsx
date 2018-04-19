@@ -18,6 +18,7 @@ class PosterClass extends React.Component {
         super(props);
 
         this.state = {
+            height: "500px",
             img: [],
         };
         this.getImg();
@@ -40,6 +41,24 @@ class PosterClass extends React.Component {
         });
     }
 
+    updateDimensions(){
+        let height = $(".image").height();
+        let newHeight = height+"px";
+        this.setState({height: newHeight});
+    }
+
+    componentWillMount() {
+        this.updateDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
+    }
+
     render() {
         let list = [];
         _.each(this.state.img, (img, index) => {
@@ -50,7 +69,7 @@ class PosterClass extends React.Component {
             );
         });
         return(
-          <Carousel interval="4000" type="card" height="500px">
+          <Carousel interval="4000" type="card" height={this.state.height}>
               {list}
           </Carousel>
         );
