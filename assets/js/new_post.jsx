@@ -140,7 +140,7 @@ class NewPostClass extends React.Component {
                                     <Input onChange={this.onChange.bind(this, "title")} />
                                 </Form.Item>
                                 <Form.Item label="Content (Support Markdown Styling)" prop="content">
-                                    <Input type="textarea" onChange={this.onChange.bind(this, "content")}/>
+                                    <Input type="textarea" autosize={true} onChange={this.onChange.bind(this, "content")}/>
                                 </Form.Item>
                                 <Form.Item>
                                     <Button nativeType="submit" type="primary">

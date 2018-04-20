@@ -52,12 +52,12 @@ class PosterClass extends React.Component {
     }
 
     componentDidMount() {
-        window.removeEventListener("load", this.updateDimensions.bind(this));
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updateDimensions.bind(this));
+        /* window.removeEventListener("load", this.updateDimensions.bind(this));
+         * window.removeEventListener("resize", this.updateDimensions.bind(this));*/
     }
 
     render() {
