@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+
 import {Carousel} from 'element-react';
 
+import store from "./store";
 import Movie_card from "./movie_card";
 import MyCarouselCard from "./carouselcard"
 
-//import Overlay from 'react-overlays/lib/Overlay';
-//import Test from 'test.jsx';
-
-export default function PosterCarousel(props) {
-    return <PosterClass/>;
+function PosterCarousel(props) {
+    return <PosterClass height={props.height} />;
 }
 
 class PosterClass extends React.Component {
@@ -18,7 +18,7 @@ class PosterClass extends React.Component {
         super(props);
 
         this.state = {
-            height: "500px",
+            height: props.height,
             img: [],
         };
         this.getImg();
@@ -44,6 +44,10 @@ class PosterClass extends React.Component {
     updateDimensions(){
         let height = $(".image").height();
         let newHeight = height+"px";
+        store.dispatch({
+            type: "SET_HEIGHT",
+            data: newHeight,
+        });
         this.setState({height: newHeight});
     }
 
@@ -56,8 +60,8 @@ class PosterClass extends React.Component {
     }
 
     componentWillUnmount() {
-        /* window.removeEventListener("load", this.updateDimensions.bind(this));
-         * window.removeEventListener("resize", this.updateDimensions.bind(this));*/
+        window.removeEventListener("load", this.updateDimensions.bind(this));
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
     }
 
     render() {
@@ -76,3 +80,11 @@ class PosterClass extends React.Component {
         );
     }
 }
+
+function state2props(state) {
+    return {
+        height: state.height,
+    };
+}
+
+export default connect(state2props)(PosterCarousel);
