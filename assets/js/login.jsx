@@ -136,12 +136,12 @@ class LoginForm extends React.Component {
                     </Form.Item>
                     <Form.Item>
                         <Layout.Row type="flex" justify="space-between" align="middle">
-                            <Layout.Col span="8" xs="22" lg="6">
+                            <Layout.Col span="8" xs="12" lg="6">
                                 <Button nativeType="submit" type="primary">
                                     Submit
                                 </Button>
                             </Layout.Col>
-                            <Layout.Col span="8" xs="22" lg="6" style={{textAlign: "right"}}>
+                            <Layout.Col span="8" xs="12" lg="6" style={{textAlign: "right"}}>
                                 <Link to="/newuser">
                                     New User
                                 </Link>

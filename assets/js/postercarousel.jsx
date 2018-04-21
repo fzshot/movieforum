@@ -6,7 +6,6 @@ import {connect} from "react-redux";
 import {Carousel} from 'element-react';
 
 import store from "./store";
-import Movie_card from "./movie_card";
 import MyCarouselCard from "./carouselcard"
 
 function PosterCarousel(props) {

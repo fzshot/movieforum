@@ -28,9 +28,11 @@ function Nav(props) {
                         <Link to="/newpost" className="el-menu-item">
                             Create Post
                         </Link>
-                        <Menu.SubMenu index="4" title={user_name} className="login-align">
+                        <Menu.SubMenu className="my-sub-menu" index="4" title={user_name} style={{float: "right"}}>
                             <Menu.Item index="4-1">
+                                <span>
                                     Logout
+                                </span>
                             </Menu.Item>
                         </Menu.SubMenu>
                     </Menu>
@@ -48,7 +50,7 @@ function Nav(props) {
                         <Link to="/newpost" className="el-menu-item">
                             Create Post
                         </Link>
-                        <Link to="/login" className="el-menu-item">
+                        <Link to="/login" className="el-menu-item" style={{float: "right"}}>
                             Login
                         </Link>
                     </Menu>
