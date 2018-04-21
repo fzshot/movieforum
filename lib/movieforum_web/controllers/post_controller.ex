@@ -28,34 +28,44 @@ defmodule MovieforumWeb.PostController do
     render(conn, "index.json", posts: posts)
   end
 
-  def create(conn, %{"post" => post_params}) do
-    # check tmdb_id not exists then add into the server
-    tmdb = TMDBs.get_tmdb_by_tmdbid(Integer.to_string(post_params["tmdb_id"]))
+  def create(conn, %{"post" => post_params, "token" => token}) do
+    case Phoenix.Token.verify(conn, "auth token", token["token"], max_age: 86400) do
+      {:ok, user_id} ->
+        if token["user_id"] != user_id do
+          {:error, "token error"}
+        end
 
-    right_tmdbid =
-      if tmdb == [] do
-        # json string
-        detail = APIs.movie_detail(post_params["tmdb_id"])
-        |> IO.inspect
-        {:ok, %TMDB{} = y} = TMDBs.create_tmdb(%{tmdb_id: Integer.to_string(post_params["tmdb_id"]), detail_json: detail})
-        |> IO.inspect
-        y.id
-      else
-        List.first(tmdb)
-      end
+        # check tmdb_id not exists then add into the server
+        tmdb = TMDBs.get_tmdb_by_tmdbid(Integer.to_string(post_params["tmdb_id"]))
 
-    post_params = post_params
-    |> Map.put("tmdb_id", right_tmdbid)
+        right_tmdbid =
+        if tmdb == [] do
+          # json string
+          detail = APIs.movie_detail(post_params["tmdb_id"])
+          |> IO.inspect
+          {:ok, %TMDB{} = y} = TMDBs.create_tmdb(%{tmdb_id: Integer.to_string(post_params["tmdb_id"]), detail_json: detail})
+          |> IO.inspect
+          y.id
+        else
+          List.first(tmdb)
+        end
 
-    with {:ok, %Post{} = post} <- Posts.create_post(post_params) do
-      post = post
-      |> Repo.preload(:user)
-      |> Repo.preload(:tmdb)
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", post_path(conn, :show, post))
-      |> render("show.json", post: post)
+        post_params = post_params
+        |> Map.put("tmdb_id", right_tmdbid)
+
+        with {:ok, %Post{} = post} <- Posts.create_post(post_params) do
+          post = post
+          |> Repo.preload(:user)
+          |> Repo.preload(:tmdb)
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", post_path(conn, :show, post))
+          |> render("show.json", post: post)
+        end
+      {:error, _} ->
+        {:error, "token error"}
     end
+
   end
 
   def show(conn, %{"id" => id}) do
@@ -63,11 +73,19 @@ defmodule MovieforumWeb.PostController do
     render(conn, "show.json", post: post)
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}) do
+  def update(conn, %{"id" => id, "post" => post_params, "token" => token}) do
     post = Posts.get_post!(id)
 
-    with {:ok, %Post{} = post} <- Posts.update_post(post, post_params) do
-      render(conn, "show.json", post: post)
+    case Phoenix.Token.verify(conn, "auth token", token["token"], max_age: 86400) do
+      {:ok, user_id} ->
+        if post.user.id != user_id do
+          {:error, "token error"}
+        end
+        with {:ok, %Post{} = post} <- Posts.update_post(post, post_params) do
+          render(conn, "show.json", post: post)
+        end
+      {:error, _} ->
+        {:error, "token error"}
     end
   end
 

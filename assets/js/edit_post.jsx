@@ -76,7 +76,11 @@ class NewPostClass extends React.Component {
                         title: this.state.model.title,
                         content: this.state.model.content,
                         user_id: this.state.user_id,
-                    }
+                    },
+                    token: {
+                        token: this.state.token,
+                        user_id: this.state.user_id,
+                    },
                 };
 
                 $.ajax(path, {
@@ -90,6 +94,13 @@ class NewPostClass extends React.Component {
                             message: "Post Created",
                         });
                         this.setState({redirect: true});
+                    },
+                    error: (resp) => {
+                        let error = resp.responseJSON;
+                        Message({
+                            type: "error",
+                            message: error.myerror,
+                        });
                     },
                 });
             }

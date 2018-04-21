@@ -23,4 +23,11 @@ defmodule MovieforumWeb.FallbackController do
     |> put_status(401)
     |> json %{myerror: "Are you sure you are Human? or Robot?"}
   end
+
+  def call(conn, {:error, "token error"}) do
+    conn
+    |> put_status(401)
+    |> json %{myerror: "Loggin experied. Please log in again!"}
+  end
+
 end
