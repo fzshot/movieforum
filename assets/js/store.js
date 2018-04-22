@@ -95,9 +95,18 @@ function route(state = 1, action) {
     }
 }
 
+function height(state = "500px", action) {
+    switch(action.type) {
+        case "SET_HEIGHT":
+            return action.data;
+        default:
+            return state;
+    }
+}
+
 
 function root_reducer(state0, action) {
-    let reducer = combineReducers({token, users, redirect, login, newuser_dup, pagenum, posts, route});
+    let reducer = combineReducers({token, users, redirect, login, newuser_dup, pagenum, posts, route, height});
     let state1 = reducer(state0, action);
     return deepFreeze(state1);
 }

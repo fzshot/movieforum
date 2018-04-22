@@ -76,7 +76,11 @@ class NewPostClass extends React.Component {
                         title: this.state.model.title,
                         content: this.state.model.content,
                         user_id: this.state.user_id,
-                    }
+                    },
+                    token: {
+                        token: this.state.token,
+                        user_id: this.state.user_id,
+                    },
                 };
 
                 $.ajax(path, {
@@ -90,6 +94,13 @@ class NewPostClass extends React.Component {
                             message: "Post Created",
                         });
                         this.setState({redirect: true});
+                    },
+                    error: (resp) => {
+                        let error = resp.responseJSON;
+                        Message({
+                            type: "error",
+                            message: error.myerror,
+                        });
                     },
                 });
             }
@@ -110,7 +121,7 @@ class NewPostClass extends React.Component {
                                     <Input value={this.state.model.title} onChange={this.onChange.bind(this, "title")} />
                                 </Form.Item>
                                 <Form.Item label="Content (Support Markdown Styling)" prop="content">
-                                    <Input type="textarea" value={this.state.model.content} onChange={this.onChange.bind(this, "content")}/>
+                                    <Input type="textarea" autosize={true} value={this.state.model.content} onChange={this.onChange.bind(this, "content")}/>
                                 </Form.Item>
                                 <Form.Item>
                                     <Button nativeType="submit" type="primary">

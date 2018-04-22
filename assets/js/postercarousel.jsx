@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+
 import {Carousel} from 'element-react';
 
-import Movie_card from "./movie_card";
+import store from "./store";
 import MyCarouselCard from "./carouselcard"
 
-//import Overlay from 'react-overlays/lib/Overlay';
-//import Test from 'test.jsx';
-
-export default function PosterCarousel(props) {
-    return <PosterClass/>;
+function PosterCarousel(props) {
+    return <PosterClass height={props.height} />;
 }
 
 class PosterClass extends React.Component {
@@ -18,6 +17,7 @@ class PosterClass extends React.Component {
         super(props);
 
         this.state = {
+            height: props.height,
             img: [],
         };
         this.getImg();
@@ -40,6 +40,29 @@ class PosterClass extends React.Component {
         });
     }
 
+    updateDimensions(){
+        let height = $(".image").height();
+        let newHeight = height+"px";
+        store.dispatch({
+            type: "SET_HEIGHT",
+            data: newHeight,
+        });
+        this.setState({height: newHeight});
+    }
+
+    componentWillMount() {
+        window.addEventListener("load", this.updateDimensions.bind(this));
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("load", this.updateDimensions.bind(this));
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
+    }
+
     render() {
         let list = [];
         _.each(this.state.img, (img, index) => {
@@ -50,9 +73,17 @@ class PosterClass extends React.Component {
             );
         });
         return(
-          <Carousel interval="4000" type="card" height="500px">
+          <Carousel interval="4000" type="card" height={this.state.height}>
               {list}
           </Carousel>
         );
     }
 }
+
+function state2props(state) {
+    return {
+        height: state.height,
+    };
+}
+
+export default connect(state2props)(PosterCarousel);

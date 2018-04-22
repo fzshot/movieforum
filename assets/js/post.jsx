@@ -96,7 +96,7 @@ class ShowPostClass extends React.Component {
                                 </div>
                             </div>
                         }>
-                            <Layout.Row type="flex" justify="center" align="top">
+                            <Layout.Row className="extra-margin" type="flex" justify="center" align="top">
                                 <Layout.Col span="12" xs="22" lg="10">
                                     <Card bodyStyle={{padding: "0"}}>
                                             <img width="100%" height="100%" src={this.state.tmdb_img}/>

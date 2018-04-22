@@ -133,12 +133,12 @@ class NewUserForm extends React.Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to="/"/>;
+            return <Redirect to="/login"/>;
         }
         else {
             return (
                 <Layout.Row type="flex" align="middle" justify="center">
-                    <Layout.Col span="8" xs="24" lg="6">
+                    <Layout.Col span="8" xs="22" lg="6">
                         <h3>Registration</h3>
                         <Form ref="form" model={this.state.model} rules={this.state.rule} onSubmit={this.onSubmit.bind(this)}>
                             <Form.Item label="Nick Name" prop="name">
