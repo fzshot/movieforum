@@ -95,7 +95,7 @@ function route(state = 1, action) {
     }
 }
 
-function height(state = "500px", action) {
+function height(state = "600px", action) {
     switch(action.type) {
         case "SET_HEIGHT":
             return action.data;
